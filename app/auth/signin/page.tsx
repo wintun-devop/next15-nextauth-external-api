@@ -1,17 +1,34 @@
 'use client';
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+
 
 const Login: React.FC = () => {
-//   const router = useRouter();
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    const callbackUrl = '/';
+    try {
+      const loginResult = await signIn('credentials', {
+        username: username,
+        password: password,
+        redirect: false,
+        callbackUrl,
+      });
+      if (loginResult?.error) {
+        setError(loginResult?.error);
+      } else {
+        router.push(callbackUrl);
+      }
+    } catch(e:any) {
+      setError(e?.error);
+    }
     // Sample login logic
     /* if (username === 'admin' && password === 'password') {
       router.push('/home');
