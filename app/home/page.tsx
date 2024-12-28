@@ -1,13 +1,16 @@
+'use client';
 import React from 'react';
-import { Container, Typography, Grid, Card, CardContent, CardActions, Button } from '@mui/material';
+import { Container, Typography, Grid, Card, CardContent, CardActions, Button ,Paper,Box} from '@mui/material';
+import { signOut } from 'next-auth/react'
 
 export default function Home() {
+  const handleLogout = () => { signOut({ callbackUrl: '/' }); };
   return (
     <Container maxWidth="lg">
-      <Typography variant="h1" align="center">
+      <Typography variant="h3" align="center">
         Welcome to My Next.js Project!
       </Typography>
-      <Grid container spacing={2} justify="center">
+      <Grid container spacing={5} justifyContent="center">
         <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
@@ -42,6 +45,35 @@ export default function Home() {
             </CardActions>
           </Card>
         </Grid>
+        {/* <Paper
+                  sx={{
+                    alignSelf:"left",
+                    padding: 3,
+                    textAlign: "center",
+                    borderRadius: 5,
+                    border: 1,
+                    borderColor: "#2EB3EC",
+                    backgroundColor: "#fff",
+                    width: { xs: 150 },
+                  }}
+                  elevation={3}
+                >
+                  <Box
+                    sx={{
+                      width: "100px",
+                      height: "100px",
+                      margin: "0 auto",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    component="img"
+                    // src={icon.something}
+                  />
+          </Paper> */}
+      </Grid>
+      <Grid>
+      <Button variant="contained" color="success" onClick={handleLogout} style={{ marginBottom: '20px' }}> Logout </Button>
       </Grid>
     </Container>
   );
